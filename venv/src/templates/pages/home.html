@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg"></div>
+  <div class="hero__grid"></div>
+  <div class="hero__content">
+    <div class="hero__eyebrow"><span>⚡</span> Now accepting new clients for Q3 2026</div>
+    <h1 class="hero__title">Build products<br><span class="gradient-text">worth remembering</span></h1>
+    <p class="hero__sub">Strategy, design, and engineering from a single team. We obsess over the details so your users never have to.</p>
+    <div class="hero__actions">
+      <a href="{% url 'services' %}" class="btn btn-primary btn-lg">Explore services <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="{% url 'contact' %}" class="btn btn-secondary btn-lg">Get in touch</a>
+    </div>
+    <div class="hero__stats">
+      <div><div class="hero__stat-num" data-count="150" data-suffix="+">0</div><div class="hero__stat-label">Projects shipped</div></div>
+      <div><div class="hero__stat-num" data-count="98" data-suffix="%">0</div><div class="hero__stat-label">Client satisfaction</div></div>
+      <div><div class="hero__stat-num" data-count="12" data-suffix=" yrs">0</div><div class="hero__stat-label">In business</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-hint__line"></div></div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="badge">What we do</div>
+      <h2 class="heading-xl">Services built<br>for scale</h2>
+      <p class="lead">From zero-to-one product thinking to running production systems — we cover the full stack.</p>
+    </div>
+    <div class="grid-3" data-stagger>
+      {% for service in featured_services %}
+      <a href="{% url 'service_detail' service.slug %}" class="service-card" style="display:block">
+        <div class="service-card__icon">{% if service.icon == 'rocket' %}🚀{% elif service.icon == 'eye' %}👁{% elif service.icon == 'code' %}⌨️{% elif service.icon == 'cloud' %}☁️{% elif service.icon == 'shield' %}🛡{% elif service.icon == 'chart' %}📊{% elif service.icon == 'bolt' %}⚡{% else %}✦{% endif %}</div>
+        <div class="service-card__title">{{ service.title }}</div>
+        <div class="service-card__desc">{{ service.short_description }}</div>
+        {% if service.price %}<div class="service-card__price">From ${{ service.price|floatformat:0 }}</div>{% endif %}
+      </a>
+      {% empty %}
+      <div class="service-card"><div class="service-card__icon">⚡</div><div class="service-card__title">Product Strategy</div><div class="service-card__desc">Data-driven strategies that align product vision with business goals.</div></div>
+      <div class="service-card"><div class="service-card__icon">👁</div><div class="service-card__title">UI/UX Design</div><div class="service-card__desc">Human-centered design that converts visitors into loyal customers.</div></div>
+      <div class="service-card"><div class="service-card__icon">⌨️</div><div class="service-card__title">Engineering</div><div class="service-card__desc">Scalable, secure systems built to handle millions of requests.</div></div>
+      <div class="service-card"><div class="service-card__icon">☁️</div><div class="service-card__title">Cloud & DevOps</div><div class="service-card__desc">CI/CD pipelines and zero-downtime deployments.</div></div>
+      <div class="service-card"><div class="service-card__icon">🛡</div><div class="service-card__title">Security Audit</div><div class="service-card__desc">Penetration testing and compliance for enterprise standards.</div></div>
+      <div class="service-card"><div class="service-card__icon">📊</div><div class="service-card__title">Analytics & BI</div><div class="service-card__desc">Turn raw data into actionable insights with live dashboards.</div></div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-8"><a href="{% url 'services' %}" class="btn btn-secondary">View all services →</a></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" style="background:var(--clr-bg-2)">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="badge">Our process</div>
+      <h2 class="heading-xl">From idea to impact,<br>in four steps</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-6)" data-stagger>
+      <div style="text-align:center;padding:var(--sp-8) var(--sp-4)"><div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-accent);display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-6);font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);color:var(--clr-accent-2)">1</div><h3 style="font-size:var(--text-lg);margin-bottom:var(--sp-3)">Discovery</h3><p style="color:var(--clr-text-muted);font-size:var(--text-sm)">We audit your current state, define success metrics, and map a clear path forward.</p></div>
+      <div style="text-align:center;padding:var(--sp-8) var(--sp-4)"><div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-accent);display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-6);font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);color:var(--clr-accent-2)">2</div><h3 style="font-size:var(--text-lg);margin-bottom:var(--sp-3)">Strategy</h3><p style="color:var(--clr-text-muted);font-size:var(--text-sm)">Roadmap, architecture decisions, and design system established before a line of code.</p></div>
+      <div style="text-align:center;padding:var(--sp-8) var(--sp-4)"><div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-accent);display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-6);font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);color:var(--clr-accent-2)">3</div><h3 style="font-size:var(--text-lg);margin-bottom:var(--sp-3)">Execution</h3><p style="color:var(--clr-text-muted);font-size:var(--text-sm)">Two-week sprints with daily async updates and weekly video check-ins.</p></div>
+      <div style="text-align:center;padding:var(--sp-8) var(--sp-4)"><div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--clr-accent);display:flex;align-items:center;justify-content:center;margin:0 auto var(--sp-6);font-family:var(--font-display);font-weight:800;font-size:var(--text-xl);color:var(--clr-accent-2)">4</div><h3 style="font-size:var(--text-lg);margin-bottom:var(--sp-3)">Launch & Grow</h3><p style="color:var(--clr-text-muted);font-size:var(--text-sm)">We stay on after launch for 30 days to monitor, tune, and iterate.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+{% if testimonials %}
+<section class="section">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="badge">Social proof</div>
+      <h2 class="heading-xl">Trusted by builders<br>and founders</h2>
+    </div>
+    <div class="testimonials-grid" data-stagger>
+      {% for t in testimonials %}
+      <div class="testimonial-card">
+        <div class="stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+        <div class="testimonial-card__quote">"</div>
+        <p class="testimonial-card__text">{{ t.content }}</p>
+        <div class="testimonial-card__author">
+          <div class="testimonial-card__avatar">{{ t.name.0 }}</div>
+          <div><div class="testimonial-card__name">{{ t.name }}</div><div class="testimonial-card__role">{{ t.job_title }}{% if t.company %}, {{ t.company }}{% endif %}</div></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-section" data-reveal>
+      <div class="badge" style="margin-bottom:var(--sp-6)">Ready to build?</div>
+      <h2 class="heading-xl" style="margin-bottom:var(--sp-6)">Let's make something<br><span class="gradient-text">extraordinary</span></h2>
+      <p class="lead" style="margin:0 auto var(--sp-8)">Tell us what you're building and we'll respond within 24 hours with a tailored proposal.</p>
+      <div style="display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap">
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Start a project</a>
+        <a href="{% url 'about' %}" class="btn btn-secondary btn-lg">Meet the team</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

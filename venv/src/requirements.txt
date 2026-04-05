@@ -1,0 +1,20 @@
+# ── Core ─────────────────────────────────────
+Django>=4.2,<5.0
+Pillow>=10.0.0
+
+# ── Production server ─────────────────────────
+gunicorn>=21.0.0
+
+# ── Static files (production) ─────────────────
+whitenoise>=6.6.0
+
+# ── Database (production: swap SQLite for this) ─
+# psycopg2-binary>=2.9.9   # PostgreSQL
+# dj-database-url>=2.1.0   # Parse DATABASE_URL env var
+
+# ── Environment variables ─────────────────────
+# python-decouple>=3.8      # Load .env files cleanly
+
+# ── Security (optional extras) ────────────────
+# django-axes>=6.0.0        # Brute-force protection
+# django-cors-headers>=4.0  # CORS headers for APIs

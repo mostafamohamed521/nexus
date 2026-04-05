@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Services{% endblock %}
+{% block content %}
+<section style="padding-top:calc(var(--nav-h) + var(--sp-20));padding-bottom:var(--sp-16);background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(108,99,255,0.18) 0%,transparent 60%)">
+  <div class="container">
+    <div style="max-width:660px;margin:0 auto;text-align:center" data-reveal>
+      <div class="badge" style="margin-bottom:var(--sp-6)">Services</div>
+      <h1 class="heading-xl" style="margin-bottom:var(--sp-6)">Everything you need<br><span class="gradient-text">under one roof</span></h1>
+      <p class="lead" style="margin:0 auto">End-to-end digital product work — strategy, design, engineering, and operations — delivered by a team that treats your business like their own.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid-3" data-stagger>
+      {% for service in services %}
+      <a href="{% url 'service_detail' service.slug %}" class="service-card" style="display:block">
+        <div class="service-card__icon">{% if service.icon == 'rocket' %}🚀{% elif service.icon == 'eye' %}👁{% elif service.icon == 'code' %}⌨️{% elif service.icon == 'cloud' %}☁️{% elif service.icon == 'shield' %}🛡{% elif service.icon == 'chart' %}📊{% elif service.icon == 'bolt' %}⚡{% else %}✦{% endif %}</div>
+        <div class="service-card__title">{{ service.title }}</div>
+        <div class="service-card__desc">{{ service.short_description }}</div>
+        {% if service.price %}<div class="service-card__price">From ${{ service.price|floatformat:0 }}</div>{% endif %}
+      </a>
+      {% empty %}
+      <div class="card" style="grid-column:1/-1;text-align:center;padding:var(--sp-16)">
+        <p style="color:var(--clr-text-muted)">No services found. Run <code>python manage.py seed_data</code> to populate.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section--sm">
+  <div class="container">
+    <div class="cta-section" data-reveal>
+      <h2 class="heading-lg" style="margin-bottom:var(--sp-4)">Need something custom?</h2>
+      <p class="lead" style="margin:0 auto var(--sp-6)">Every great product is unique. Tell us your challenge and we'll scope a solution.</p>
+      <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Get a custom quote</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

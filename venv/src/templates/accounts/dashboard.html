@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="dashboard-sidebar">
+    <div style="padding:0 var(--sp-6) var(--sp-6);border-bottom:1px solid var(--clr-border);margin-bottom:var(--sp-4)">
+      <div style="display:flex;align-items:center;gap:var(--sp-3)">
+        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--clr-accent),var(--clr-teal));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:var(--text-base)">{{ user.first_name.0|upper|default:user.username.0|upper }}</div>
+        <div>
+          <div style="font-weight:600;font-size:var(--text-sm)">{{ user.full_name|default:user.username }}</div>
+          <div style="font-size:var(--text-xs);color:var(--clr-text-muted)">{{ user.email }}</div>
+        </div>
+      </div>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="{% url 'dashboard' %}" class="active">📊 Overview</a></li>
+      <li><a href="{% url 'profile' %}">👤 Profile</a></li>
+      <li><a href="{% url 'services' %}">⚡ Services</a></li>
+      <li><a href="{% url 'contact' %}">💬 New message</a></li>
+      <li style="margin-top:var(--sp-6)"><a href="{% url 'logout' %}">🚪 Sign out</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <div class="dashboard-main">
+    <div class="dashboard-header">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:var(--sp-4)">
+        <div>
+          <h1 style="font-size:var(--text-3xl);font-weight:800;margin-bottom:var(--sp-2)">Good to see you, {{ user.first_name|default:user.username }} 👋</h1>
+          <p style="color:var(--clr-text-muted)">Here's what's happening with your account.</p>
+        </div>
+        <a href="{% url 'contact' %}" class="btn btn-primary">+ New message</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-2)">📬</div>
+        <div class="stat-card__value">{{ messages_count }}</div>
+        <div class="stat-card__label">Messages sent</div>
+        <div class="stat-card__trend trend-neutral">Active</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-2)">⚡</div>
+        <div class="stat-card__value">{{ services_count }}</div>
+        <div class="stat-card__label">Services available</div>
+        <div class="stat-card__trend trend-up">↑ Growing</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-2)">📅</div>
+        <div class="stat-card__value">{{ user.created_at|date:"M Y" }}</div>
+        <div class="stat-card__label">Member since</div>
+        <div class="stat-card__trend trend-neutral">Welcome!</div>
+      </div>
+      <div class="stat-card">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-2)">✅</div>
+        <div class="stat-card__value">Active</div>
+        <div class="stat-card__label">Account status</div>
+        <div class="stat-card__trend trend-up">Verified</div>
+      </div>
+    </div>
+
+    <!-- Recent messages -->
+    <div style="background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg);overflow:hidden">
+      <div style="padding:var(--sp-6);border-bottom:1px solid var(--clr-border);display:flex;justify-content:space-between;align-items:center">
+        <h2 style="font-size:var(--text-lg);font-weight:700">Recent Messages</h2>
+        <a href="{% url 'contact' %}" class="btn btn-ghost btn-sm">New →</a>
+      </div>
+      {% if recent_contacts %}
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="border-bottom:1px solid var(--clr-border)">
+          <th style="padding:var(--sp-3) var(--sp-6);text-align:left;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--clr-text-muted)">Subject</th>
+          <th style="padding:var(--sp-3) var(--sp-6);text-align:left;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--clr-text-muted)">Status</th>
+          <th style="padding:var(--sp-3) var(--sp-6);text-align:left;font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.08em;color:var(--clr-text-muted)">Date</th>
+        </tr></thead>
+        <tbody>
+          {% for msg in recent_contacts %}
+          <tr style="border-bottom:1px solid var(--clr-border)">
+            <td style="padding:var(--sp-4) var(--sp-6);font-size:var(--text-sm)">{{ msg.subject }}</td>
+            <td style="padding:var(--sp-4) var(--sp-6)"><span class="badge" style="{% if msg.status == 'replied' %}background:rgba(45,212,191,0.1);border-color:rgba(45,212,191,0.3);color:var(--clr-teal){% endif %}">{{ msg.status }}</span></td>
+            <td style="padding:var(--sp-4) var(--sp-6);font-size:var(--text-sm);color:var(--clr-text-muted)">{{ msg.created_at|date:"M d, Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div style="padding:var(--sp-12);text-align:center">
+        <div style="font-size:3rem;margin-bottom:var(--sp-4)">📬</div>
+        <p style="color:var(--clr-text-muted);margin-bottom:var(--sp-4)">No messages yet. Start a conversation!</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Send your first message</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Quick links -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--sp-4);margin-top:var(--sp-6)">
+      <a href="{% url 'profile' %}" class="card" style="text-decoration:none">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">👤</div>
+        <div style="font-weight:600;margin-bottom:var(--sp-1)">Edit Profile</div>
+        <div style="font-size:var(--text-sm);color:var(--clr-text-muted)">Update your info and avatar.</div>
+      </a>
+      <a href="{% url 'services' %}" class="card" style="text-decoration:none">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">⚡</div>
+        <div style="font-weight:600;margin-bottom:var(--sp-1)">Browse Services</div>
+        <div style="font-size:var(--text-sm);color:var(--clr-text-muted)">Explore what we offer.</div>
+      </a>
+      <a href="{% url 'contact' %}" class="card" style="text-decoration:none">
+        <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">💬</div>
+        <div style="font-weight:600;margin-bottom:var(--sp-1)">Start a Project</div>
+        <div style="font-size:var(--text-sm);color:var(--clr-text-muted)">Send us a message.</div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

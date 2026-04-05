@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<section style="padding-top:calc(var(--nav-h) + var(--sp-24));padding-bottom:var(--sp-24);background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(108,99,255,0.2) 0%,transparent 60%)">
+  <div class="container">
+    <div style="max-width:700px;margin:0 auto;text-align:center" data-reveal>
+      <div class="badge" style="margin-bottom:var(--sp-6)">Our story</div>
+      <h1 class="heading-xl" style="margin-bottom:var(--sp-6)">We exist to build things<br><span class="gradient-text">that last</span></h1>
+      <p class="lead" style="margin:0 auto">Founded in 2014, Nexus grew from a two-person consulting shop into a full-service digital product studio trusted by startups and enterprises alike.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-16);align-items:center" data-reveal>
+      <div>
+        <div class="badge" style="margin-bottom:var(--sp-6)">Mission</div>
+        <h2 class="heading-lg" style="margin-bottom:var(--sp-6)">Why we do what we do</h2>
+        <p style="color:var(--clr-text-muted);line-height:1.8;margin-bottom:var(--sp-4)">Most digital agencies optimise for billable hours. We optimise for outcomes. Every engagement starts with a clear definition of what success looks like — and we don't stop until we get there.</p>
+        <p style="color:var(--clr-text-muted);line-height:1.8">We believe great software is 20% code and 80% clear thinking. That's why our team includes strategists, researchers, and writers alongside engineers and designers.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)">
+        {% for val in "1234" %}
+        <div class="card">
+          {% if forloop.counter == 1 %}<div style="font-size:2rem;margin-bottom:var(--sp-3)">🎯</div><div style="font-weight:700;margin-bottom:var(--sp-2)">Outcome-first</div><div style="color:var(--clr-text-muted);font-size:var(--text-sm)">We tie every decision to a measurable result.</div>
+          {% elif forloop.counter == 2 %}<div style="font-size:2rem;margin-bottom:var(--sp-3)">🔍</div><div style="font-weight:700;margin-bottom:var(--sp-2)">Transparent</div><div style="color:var(--clr-text-muted);font-size:var(--text-sm)">Open books, honest timelines, no surprises.</div>
+          {% elif forloop.counter == 3 %}<div style="font-size:2rem;margin-bottom:var(--sp-3)">⚡</div><div style="font-weight:700;margin-bottom:var(--sp-2)">Fast & precise</div><div style="color:var(--clr-text-muted);font-size:var(--text-sm)">Speed without sacrificing craft.</div>
+          {% else %}<div style="font-size:2rem;margin-bottom:var(--sp-3)">🤝</div><div style="font-weight:700;margin-bottom:var(--sp-2)">Long-term</div><div style="color:var(--clr-text-muted);font-size:var(--text-sm)">We build relationships, not just projects.</div>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" style="background:var(--clr-bg-2)">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="badge">The people</div>
+      <h2 class="heading-xl">Meet the team</h2>
+      <p class="lead">Experts who've shipped at Stripe, Google, Figma, and beyond — now under one roof.</p>
+    </div>
+    <div class="team-grid" data-stagger>
+      {% for member in team %}
+      <div class="team-card">
+        <div class="team-card__avatar">{{ member.name.0 }}</div>
+        <div class="team-card__name">{{ member.name }}</div>
+        <div class="team-card__role">{{ member.role }}</div>
+        {% if member.bio %}<p class="team-card__bio">{{ member.bio }}</p>{% endif %}
+      </div>
+      {% empty %}
+      {% for n in "1234" %}
+      <div class="team-card">
+        <div class="team-card__avatar">{{ forloop.counter }}</div>
+        <div class="team-card__name">Team Member</div>
+        <div class="team-card__role">Role</div>
+        <p class="team-card__bio">Run <code>python manage.py seed_data</code> to populate team members.</p>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--sp-6)" data-stagger>
+      <div style="text-align:center;padding:var(--sp-8)"><div style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:800;color:var(--clr-white)" data-count="150" data-suffix="+">0</div><div style="color:var(--clr-text-muted);margin-top:var(--sp-2)">Projects Delivered</div></div>
+      <div style="text-align:center;padding:var(--sp-8)"><div style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:800;color:var(--clr-white)" data-count="40" data-suffix="+">0</div><div style="color:var(--clr-text-muted);margin-top:var(--sp-2)">Team Members</div></div>
+      <div style="text-align:center;padding:var(--sp-8)"><div style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:800;color:var(--clr-white)" data-count="12" data-suffix="">0</div><div style="color:var(--clr-text-muted);margin-top:var(--sp-2)">Years in Business</div></div>
+      <div style="text-align:center;padding:var(--sp-8)"><div style="font-family:var(--font-display);font-size:var(--text-5xl);font-weight:800;color:var(--clr-white)" data-count="18" data-suffix="">0</div><div style="color:var(--clr-text-muted);margin-top:var(--sp-2)">Countries Served</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section--sm">
+  <div class="container">
+    <div class="cta-section" data-reveal>
+      <h2 class="heading-lg" style="margin-bottom:var(--sp-4)">Want to join the team?</h2>
+      <p class="lead" style="margin:0 auto var(--sp-6)">We're always looking for exceptional people who care about craft.</p>
+      <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Say hello →</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<section style="padding-top:calc(var(--nav-h) + var(--sp-20));padding-bottom:var(--sp-24)">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <div class="badge">Get in touch</div>
+      <h1 class="heading-xl" style="margin-bottom:var(--sp-4)">Let's start a<br><span class="gradient-text">conversation</span></h1>
+      <p class="lead" style="margin:0 auto">Have a project in mind? Fill in the form and we'll get back to you within 24 hours.</p>
+    </div>
+
+    <div class="contact-layout">
+      <!-- Info column -->
+      <div data-reveal>
+        <div class="contact-info__item">
+          <div class="contact-info__icon">📬</div>
+          <div>
+            <div style="font-weight:600;margin-bottom:var(--sp-1)">Email us</div>
+            <div style="color:var(--clr-text-muted);font-size:var(--text-sm)">hello@nexus.io<br>We reply within 24 hours.</div>
+          </div>
+        </div>
+        <div class="contact-info__item">
+          <div class="contact-info__icon">📍</div>
+          <div>
+            <div style="font-weight:600;margin-bottom:var(--sp-1)">Headquarters</div>
+            <div style="color:var(--clr-text-muted);font-size:var(--text-sm)">San Francisco, CA<br>Remote-first team worldwide.</div>
+          </div>
+        </div>
+        <div class="contact-info__item">
+          <div class="contact-info__icon">⏱</div>
+          <div>
+            <div style="font-weight:600;margin-bottom:var(--sp-1)">Office hours</div>
+            <div style="color:var(--clr-text-muted);font-size:var(--text-sm)">Mon–Fri, 9am–6pm PST<br>Emergency support 24/7.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:var(--sp-8);padding:var(--sp-6);background:var(--clr-surface);border:1px solid var(--clr-border);border-radius:var(--radius-lg)">
+          <div style="font-weight:700;margin-bottom:var(--sp-3)">Response time</div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3)">
+            <div style="height:6px;flex:1;background:var(--clr-bg-3);border-radius:var(--radius-full);overflow:hidden">
+              <div style="width:92%;height:100%;background:linear-gradient(90deg,var(--clr-accent),var(--clr-teal));border-radius:var(--radius-full)"></div>
+            </div>
+            <span style="color:var(--clr-teal);font-size:var(--text-sm);font-weight:600">&lt; 24h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form column -->
+      <div class="card" data-reveal>
+        <h2 style="font-size:var(--text-xl);margin-bottom:var(--sp-6)">Send a message</h2>
+        <form method="POST" novalidate>
+          {% csrf_token %}
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4)">
+            <div class="form-group">
+              <label for="{{ form.name.id_for_label }}">Name</label>
+              {{ form.name }}
+              {% if form.name.errors %}<div class="form-error">{{ form.name.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="form-group">
+              <label for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email }}
+              {% if form.email.errors %}<div class="form-error">{{ form.email.errors.0 }}</div>{% endif %}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="{{ form.subject.id_for_label }}">Subject</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}<div class="form-error">{{ form.subject.errors.0 }}</div>{% endif %}
+          </div>
+          <div class="form-group">
+            <label for="{{ form.message.id_for_label }}">Message</label>
+            {{ form.message }}
+            {% if form.message.errors %}<div class="form-error">{{ form.message.errors.0 }}</div>{% endif %}
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:var(--sp-4)">Send message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

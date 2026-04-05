@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{% block meta_description %}Nexus — Premium digital products and engineering services.{% endblock %}">
+  <title>{% block title %}Nexus{% endblock %} — Digital Excellence</title>
+  {% load static %}
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="{% static 'css/design-tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+  <link rel="stylesheet" href="{% static 'css/pages.css' %}">
+  {% block extra_css %}{% endblock %}
+
+  <!-- Favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236c63ff'/><text y='24' x='6' font-size='20' fill='white'>N</text></svg>">
+</head>
+<body>
+
+  <!-- ── Navigation ───────────────────────────────────────── -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="{% url 'home' %}" class="nav__logo" aria-label="Nexus home">
+        <div class="nav__logo-mark">N</div>
+        Nexus
+      </a>
+
+      <button class="nav__toggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__links" role="list">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'services' %}">Services</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="nav__user">
+            <div class="nav__user-avatar">{{ user.first_name.0|upper|default:user.username.0|upper }}</div>
+            {{ user.first_name|default:user.username }}
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-secondary btn-sm">Sign in</a>
+          <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Get started</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Flash Messages ───────────────────────────────────── -->
+  {% if messages %}
+  <div class="messages-container" style="position:fixed;top:calc(var(--nav-h) + 1rem);right:1rem;z-index:9998;display:flex;flex-direction:column;gap:0.5rem;max-width:360px;">
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}" role="alert">
+      {{ message }}
+      <button class="alert-close" aria-label="Close" style="margin-left:auto;background:none;border:none;cursor:pointer;color:inherit;font-size:18px;line-height:1;padding:0 0 0 12px">&times;</button>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- ── Page Content ─────────────────────────────────────── -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── Footer ───────────────────────────────────────────── -->
+  {% block footer %}
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">Nexus</div>
+          <p class="footer__tagline">Engineering excellence, design mastery, and strategic thinking — delivered as one.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Product</div>
+          <ul class="footer__links">
+            <li><a href="{% url 'services' %}">Services</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Account</div>
+          <ul class="footer__links">
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'logout' %}">Sign out</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">Sign in</a></li>
+            <li><a href="{% url 'register' %}">Register</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        <div>
+          <div class="footer__heading">Legal</div>
+          <ul class="footer__links">
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; {% now "Y" %} Nexus. All rights reserved.</span>
+        <span style="display:flex;align-items:center;gap:0.5rem">
+          Built with <span style="color:var(--clr-rose)">♥</span> &amp; Django
+        </span>
+      </div>
+    </div>
+  </footer>
+  {% endblock %}
+
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

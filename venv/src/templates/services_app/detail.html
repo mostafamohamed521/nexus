@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ service.title }}{% endblock %}
+{% block content %}
+<section style="padding-top:calc(var(--nav-h) + var(--sp-20));padding-bottom:var(--sp-16)">
+  <div class="container">
+    <a href="{% url 'services' %}" style="display:inline-flex;align-items:center;gap:var(--sp-2);color:var(--clr-text-muted);font-size:var(--text-sm);margin-bottom:var(--sp-8)">← Back to services</a>
+    <div style="max-width:720px" data-reveal>
+      <div class="service-card__icon" style="width:64px;height:64px;font-size:32px;margin-bottom:var(--sp-6)">{% if service.icon == 'rocket' %}🚀{% elif service.icon == 'eye' %}👁{% elif service.icon == 'code' %}⌨️{% elif service.icon == 'cloud' %}☁️{% elif service.icon == 'shield' %}🛡{% elif service.icon == 'chart' %}📊{% elif service.icon == 'bolt' %}⚡{% else %}✦{% endif %}</div>
+      <h1 class="heading-xl" style="margin-bottom:var(--sp-4)">{{ service.title }}</h1>
+      {% if service.price %}<div class="badge" style="margin-bottom:var(--sp-6)">From ${{ service.price|floatformat:0 }}</div>{% endif %}
+      <p class="lead" style="margin-bottom:var(--sp-8)">{{ service.description }}</p>
+      <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Start this project →</a>
+    </div>
+  </div>
+</section>
+
+{% if related %}
+<section class="section" style="background:var(--clr-bg-2)">
+  <div class="container">
+    <h2 class="heading-md" style="margin-bottom:var(--sp-8)">Related services</h2>
+    <div class="grid-3" data-stagger>
+      {% for s in related %}
+      <a href="{% url 'service_detail' s.slug %}" class="service-card" style="display:block">
+        <div class="service-card__title">{{ s.title }}</div>
+        <div class="service-card__desc">{{ s.short_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
